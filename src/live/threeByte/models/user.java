@@ -14,9 +14,7 @@ public class User{
     @Column(nullable = false)
     private String password;
     
-    private String firstName;
-
-    private String lastName;
+    
 
     private String profilePicture;
     @Enumerated(EnumType.STRING)
@@ -31,13 +29,11 @@ public class User{
     private Timestamp lastLogin;
 
 
-    public User(int id, String username, String email, String password, String firstName, String lastName, String profilePicture, Rank rank, Timestamp createdAt, Timestamp updatedAt, float reputation, Timestamp lastLogin) {
+    public User(int id, String username, String email, String password, String profilePicture, Rank rank, Timestamp createdAt, Timestamp updatedAt, float reputation, Timestamp lastLogin) {
         setId(id);
         setUsername(username);
         setEmail(email);
         setPassword(password);
-        setFirstName(firstName);
-        setLastName(lastName);
         setProfilePicture(profilePicture);
         setRank(rank);
         setCreatedAt(createdAt);
@@ -76,12 +72,6 @@ public class User{
     public String getPassword() {
         return password;
     }
-    public String getFirstName() {
-        return firstName;
-    }
-    public String getLastName() {
-        return lastName;
-    }
     public String getProfilePicture() {
         return profilePicture;
     }
@@ -111,12 +101,6 @@ public class User{
     }
     public void setPassword(String password) {
         this.password = md5(password);
-    }
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
     public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;

@@ -4,8 +4,6 @@ CREATE TABLE users (
     username VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    first_name VARCHAR(255),
-    last_name VARCHAR(255),
     profile_picture VARCHAR(255),
     rank ENUM('BIT', 'BYTE', 'KILOBYTE', 'MEGABYTE', 'GIGABYTE') DEFAULT 'BIT',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
