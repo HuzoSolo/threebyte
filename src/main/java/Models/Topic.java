@@ -9,54 +9,34 @@ package Models;
  *
  * @author artun
  */
-import javax.persistence.*;
+
 import java.sql.Timestamp;
 
 
-@Entity
-@Table(name = "topics")
 public class Topic{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false)// title is required
     private String title;
 
-    @Column(nullable = false) // content is required
     private String content;
 
-    @Column(nullable = false) // user id is required and unique
     private int userId;
 
-    @Column(nullable = false, unique = true)
     private int categoryId;
 
-    @Column(nullable = false)
     private Timestamp createdAt;
 
-    @Column(nullable = false)
     private Timestamp updatedAt;
 
-    @Column(nullable = false)
-    private boolean isClosed;
+    private boolean isLocked;
 
-    @Column(nullable = false)
     private boolean isPinned;
 
     //constructor method with setters
 
-    public Topic(int id, String title, String content, int userId, int categoryId, Timestamp createdAt, Timestamp updatedAt, boolean isClosed, boolean isPinned) {
-        setId(id);
-        setTitle(title);
-        setContent(content);
-        setUserId(userId);
-        setCategoryId(categoryId);
-        setCreatedAt(createdAt);
-        setUpdatedAt(updatedAt);
-        setClosed(isClosed);
-        setPinned(isPinned);
+    public Topic() {
+       //boş constructor
     }
 
     //getters and setters
@@ -88,8 +68,8 @@ public class Topic{
         return updatedAt;
     }
 
-    public boolean getClosed(){
-        return isClosed;
+    public boolean getLocked(){
+        return isLocked;
     }
 
     public boolean getPinned(){
@@ -124,8 +104,8 @@ public class Topic{
         this.updatedAt = updatedAt;
     }
 
-    public void setClosed(boolean isClosed){
-        this.isClosed = isClosed;
+    public void setLocked(boolean isLocked){
+        this.isLocked = isLocked;
     }
 
     public void setPinned(boolean isPinned){

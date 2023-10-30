@@ -8,7 +8,6 @@ package Dao;
  *
  * @author artun
  */
-package Dao;
 
 import Models.User;
 

@@ -8,6 +8,15 @@ package Dao;
  *
  * @author artun
  */
-public class TopicDao {
-    
+import Models.Topic;
+
+public interface TopicDao {
+
+    void addTopic(Topic topic);
+
+    Topic getTopic(int id);
+
+    void updateTopic(Topic topic);
+
+    void deleteTopic(int id);
 }

@@ -13,15 +13,12 @@ import java.sql.*;
 
 public class DaoUserImp implements UserDao {
 
-    private final String url = "jdbc:mysql://db-threebyte.cmgxydh1ctvr.eu-central-1.rds.amazonaws.com";
-    private final String user = "root";
-    private final String password = "1q2w3e4r";
 
     @Override
     public void addUser(User user) {
         Connection con = null;
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/yourDatabase", "username", "password");
+            con = DriverManager.getConnection(sqlConfig.url, sqlConfig.user, sqlConfig.password);
             String sql = "INSERT INTO Users(id, username, email, password) VALUES(?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, user.getId());
@@ -39,7 +36,7 @@ public class DaoUserImp implements UserDao {
     @Override
     public User getUser(int id) {
         try {
-            Connection con = DriverManager.getConnection(url, user, password);
+            Connection con = DriverManager.getConnection(sqlConfig.url, sqlConfig.user, sqlConfig.password);
             String sql = "SELECT * FROM Users WHERE id = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -59,7 +56,7 @@ public class DaoUserImp implements UserDao {
         Connection con = null;
         try {
             // Veritabanına bağlan
-            con = DriverManager.getConnection("jdbc:mysql://threebyte.cmgxydh1ctvr.eu-central-1.rds.amazonaws.com", "username", "password");
+            con = DriverManager.getConnection(sqlConfig.url, sqlConfig.user, sqlConfig.password);
             
             // SQL sorgusu
             String sql = "UPDATE Users SET username=?, email=?, password=? WHERE id=?";
@@ -96,7 +93,7 @@ public class DaoUserImp implements UserDao {
         Connection con = null;
         try {
             // Veritabanına bağlan
-            con = DriverManager.getConnection("jdbc:mysql://threebyte.cmgxydh1ctvr.eu-central-1.rds.amazonaws.com", "username", "password");
+            con = DriverManager.getConnection(sqlConfig.url, sqlConfig.user, sqlConfig.password);
             
             // SQL sorgusu
             String sql = "DELETE FROM Users WHERE id=?";
