@@ -10,35 +10,34 @@ package Models;
  */
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import javax.persistence.*;
 import java.sql.Timestamp;
 
 // create rank enum
-enum Rank {
+
+
+
+
+public class User{
+    
+    public enum Rank {
     BIT,
     BYTE,
     KILOBYTE,
     MEGABYTE,
     GIGABYTE
-}
-
-
-@Entity
-@Table(name = "users")
-public class User{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    }
+    
+   
     private int id;
-    @Column(nullable = false, unique = true)
+  
     private String username;
-    @Column(nullable = false, unique = true)
+
     private String email;
-    @Column(nullable = false)
+
     private String password;
     
     private String profilePicture;
 
-    @Enumerated(EnumType.STRING)
     private Rank rank;
 
     private Timestamp createdAt;
@@ -50,17 +49,12 @@ public class User{
     private Timestamp lastLogin;
 
 
-    public User(int id, String username, String email, String password, String profilePicture, Rank rank, Timestamp createdAt, Timestamp updatedAt, float reputation, Timestamp lastLogin) {
+    public User(int id, String username, String email, String password) {
         setId(id);
         setUsername(username);
         setEmail(email);
         setPassword(password);
-        setProfilePicture(profilePicture);
-        setRank(rank);
-        setCreatedAt(createdAt);
-        setUpdatedAt(updatedAt);
-        setReputation(reputation);
-        setLastLogin(lastLogin);
+        
     }
     
     private String md5(String passwordToHash) {
