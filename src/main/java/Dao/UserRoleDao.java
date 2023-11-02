@@ -8,6 +8,9 @@ package Dao;
  *
  * @author sahin
  */
+
+import Models.UserRole;
+
 public interface UserRoleDao {
     
 }

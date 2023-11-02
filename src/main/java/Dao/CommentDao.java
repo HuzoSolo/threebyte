@@ -8,6 +8,16 @@ package Dao;
  *
  * @author sahin
  */
+import Models.Comment;
+
 public interface CommentDao {
+    
+    void addTopic(Comment comment);
+
+    Comment getComment(int id);
+
+    void updateComment(Comment comment);
+
+    void deleteComment(int id);
     
 }
