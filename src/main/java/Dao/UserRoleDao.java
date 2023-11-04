@@ -10,7 +10,15 @@ package Dao;
  */
 
 import Models.UserRole;
+import java.util.List;
 
 public interface UserRoleDao {
+    void addUserRole(UserRole userRole);
+    
+    void removeUserRole(int userId, int roleId);
+    
+    List<UserRole> getUserRolesByUserId(int userId);
+    
+    List<UserRole> getUserRolesByRoleId(int roleId);
     
 }

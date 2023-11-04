@@ -10,9 +10,19 @@ package Dao;
  */
 
 import Models.Category;
+import java.util.List;
 
 public interface CategoryDao {
-    
+
+    /**
+     *
+     * @param category
+     */
+    void addCategory(Category category);
+    void updateCategory(Category category);
+    void deleteCategory(int categoryId);
+    List<Category> getAllCategories();
+    Category getCategoryById(int categoryId); 
     
     
 }
