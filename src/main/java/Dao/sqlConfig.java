@@ -9,7 +9,6 @@ package Dao;
  * @author muhuz
  */
 public class sqlConfig {
-    
     protected static final String url = "jdbc:mysql://db-threebyte.cmgxydh1ctvr.eu-central-1.rds.amazonaws.com";
     protected static final String user = "root";
     protected static final String password = "1q2w3e4r";
