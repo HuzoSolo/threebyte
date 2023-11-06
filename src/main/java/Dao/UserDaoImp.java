@@ -29,6 +29,7 @@ public class UserDaoImp implements UserDao {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println(e);
         }
 
     }
@@ -41,8 +42,9 @@ public class UserDaoImp implements UserDao {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
+            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             if (rs.next()) {
-                User user = new User(rs.getInt("id"), rs.getString("username"), rs.getString("email"), rs.getString("password"));
+                User user = new User();
                 return user;
             }
         } catch (SQLException e) {
