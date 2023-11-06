@@ -15,7 +15,7 @@ public class Role {
     /**
      *
      */
-    public Role() {
+    public Role(int id1, String roleName1) {
     }
 
     public int getId() {

@@ -4,6 +4,7 @@
  */
 package Models;
 
+import java.sql.PreparedStatement;
 import java.sql.Timestamp;
 
 /**
@@ -30,8 +31,12 @@ public class Comment {
 
     //constructor method with setters
 
-    public Comment() {
+    public Comment(int id1, int topicId1, int userId1, String content1, int par2) {
        //boş constructor
+    }
+
+    public Comment(int id, int topicId, int userId, String content, Object object, Object object0, int i, int i0) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     //getters and setters
@@ -97,6 +102,10 @@ public class Comment {
 
     public void setdownVotes(int downVotes){
         this.downVotes = downVotes;
+    }
+
+    public PreparedStatement prepareStatement(String insertSql) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     

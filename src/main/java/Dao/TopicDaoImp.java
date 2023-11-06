@@ -11,7 +11,7 @@ package Dao;
 import Models.Topic;
 import java.sql.*;
 
-public class DaoTopicImp implements TopicDao {
+public class TopicDaoImp implements TopicDao {
 
     @Override
     public void addTopic(Topic topic) {

@@ -11,7 +11,7 @@ package Dao;
 import Models.User;
 import java.sql.*;
 
-public class DaoUserImp implements UserDao {
+public class UserDaoImp implements UserDao {
 
 
     @Override

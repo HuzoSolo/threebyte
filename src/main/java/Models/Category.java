@@ -16,7 +16,7 @@ public class Category {
     
     private String description;
 
-public Category() {
+public Category(int id1, String name1, String description1) {
     }
 
  public int getId() {

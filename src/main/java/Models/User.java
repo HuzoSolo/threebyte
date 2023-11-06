@@ -49,7 +49,7 @@ public class User{
     private Timestamp lastLogin;
 
 
-    public User() {
+    public User(int aInt, String string, String string1, String string2) {
 
         
     }
