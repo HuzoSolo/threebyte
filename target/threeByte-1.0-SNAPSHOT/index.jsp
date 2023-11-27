@@ -2,7 +2,7 @@
 <%@ page language="Java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:useBean id="usebean" class="SessionAndCookie.UseBeanSession" scope="session"/>
 <%@ page import="javax.servlet.http.Cookie"%>
-
+<%@page import="Dao.UserDaoImp" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -40,19 +40,23 @@
     <body>
 
         <%
-            User usr = new User();
-            usr.setUsername("furki");
-            Cookie usernameCookie = new Cookie("kullaniciAdi", usr.getUsername());
-            usernameCookie.setMaxAge(720 * 3600); // Çerezin ömrü saniye cinsinden, burada 1 saat * 30 gün
-            response.addCookie(usernameCookie);
+            //User usr = new User();
+            //usr.setUsername("furki");
+            //Cookie usernameCookie = new Cookie("kullaniciAdi", usr.getUsername());
+            //usernameCookie.setMaxAge(720 * 3600); // Çerezin ömrü saniye cinsinden, burada 1 saat * 30 gün
+            //response.addCookie(usernameCookie);
 
-            usebean.setId(11);
-            usebean.SetName("artun");
-            usebean.setRole("Admin");
-            usebean.addToSessions("Session1");
-            out.println("Session time:"+ usebean.showAge());
+            //usebean.setId(11);
+            //usebean.SetName("artun");
+            //usebean.setRole("Admin");
+            //usebean.addToSessions("Session1");
+            //out.println("Session time:"+ usebean.showAge());
+            User newuser = new User("art","art@gmail.com","123123");
             
-
+            UserDaoImp  usrdao = new UserDaoImp();
+            
+           
+            out.println(usrdao.getUser(123).getEmail());
 
             
         %>

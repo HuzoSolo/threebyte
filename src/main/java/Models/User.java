@@ -49,8 +49,10 @@ public class User{
     private Timestamp lastLogin;
 
 
-    public User(int aInt, String string, String string1, String string2) {
-
+    public User(String username, String email, String password) {
+        setUsername(username);
+        setEmail(email);
+        setPassword(password);
         
     }
     

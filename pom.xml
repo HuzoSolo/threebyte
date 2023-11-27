@@ -24,7 +24,8 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.23</version> <!-- versiyonu güncel tut -->
+            <version>5.1.49</version> <!-- versiyonu güncel tut -->
+            <type>jar</type>
         </dependency>
     </dependencies>
 
