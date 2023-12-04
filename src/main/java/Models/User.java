@@ -113,8 +113,11 @@ public class User{
     public void setEmail(String email) {
         this.email = email;
     }
-    public void setPassword(String password) {
+    public void setPasswordMd5(String password) {
         this.password = md5(password);
+    }
+    public void setPassword(String password) {
+        this.password = password;
     }
     public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
@@ -133,6 +136,10 @@ public class User{
     }
     public void setLastLogin(Timestamp lastLogin) {
         this.lastLogin = lastLogin;
+    }
+    @Override
+    public String toString(){
+        return "id : " + this.id + "<br> username : " + this.username + "<br>  email : " + this.email + " <br> password : " + this.password + "<br>  profilPic : " + this.profilePicture + "<br>  rank : " + this.rank + " <br> createdat : " + this.createdAt + "<br>  updatedat : " + this.updatedAt + " <br> lastLogin : " + this.lastLogin + " <br> reputation :" + this.reputation;
     }
     
 }

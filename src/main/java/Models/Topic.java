@@ -32,7 +32,9 @@ public class Topic{
     private boolean isLocked;
 
     private boolean isPinned;
-
+    
+    private boolean checkTitle;
+    private boolean checkContent;
     //constructor method with setters
 
     public Topic() {
@@ -81,11 +83,30 @@ public class Topic{
     }
 
     public void setTitle(String title){
-        this.title = title;
+         if(title != null || !title.equals("")){
+            this.title = title;
+            this.checkTitle = true;
+        }
+        else{
+            this.checkTitle = false;
+        }
     }
 
     public void setContent(String content){
-        this.content = content;
+        if(content != null || !content.equals("")){
+            this.content = content;
+            this.checkContent = true;
+        }
+        else{
+            this.checkContent = false;
+        }
+        
+    }
+    public boolean getCheckTitle(){
+        return this.checkTitle;
+    }
+    public boolean getCheckContent(){
+        return this.checkContent;
     }
 
     public void setUserId(int userId){

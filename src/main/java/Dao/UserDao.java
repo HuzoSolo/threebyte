@@ -13,7 +13,12 @@ import Models.User;
 
 public interface UserDao {
     void addUser(User user);
-    User getUser(int id);
-    void updateUser(User user);
+    User getUserbyId(int id);
+    User getUserbyName(String username);
+   
+    boolean updatePassword(int id, String oldPassword, String newPassword);
+    boolean updateEmail(int id, String newEmail);
+    boolean updateProfilPicture(int id, String newProfilPicture);
+    boolean updateRank(int id, User.Rank rank);
     void deleteUser(int id);
 }

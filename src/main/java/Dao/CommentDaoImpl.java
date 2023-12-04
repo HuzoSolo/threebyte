@@ -8,82 +8,187 @@ package Dao;
  *
  * @author sahin
  */
-
-
 import Models.Comment;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class CommentDaoImpl implements CommentDao {
-    private Connection con;
-
-    public CommentDaoImpl() {
-
-    }
-
-    
-    public void addComment(Comment comment) {
-       
-        String insertSql = "INSERT INTO comments (topic_id, user_id, content) VALUES (?, ?, ?)";
-        try (PreparedStatement preparedStatement = con.prepareStatement(insertSql)) {
-            preparedStatement.setInt(1, comment.getTopicId());
-            preparedStatement.setInt(2, comment.getUserId());
-            preparedStatement.setString(3, comment.getContent());
-            preparedStatement.executeUpdate();
-            System.out.println("Yorum eklendi.");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.err.println("Yorum eklenirken bir hata oluştu.");
-        }
-    }
-
-   
-    public List<Comment> getCommentsByTopic(int topicId) {
-        List<Comment> comments = new ArrayList<>();
-        // Belirli bir konuya ait yorumları getirmek için SQL sorgusu oluşturun ve çalıştırın.
-        String selectSql = "SELECT * FROM comments WHERE topic_id = ?";
-        try (PreparedStatement preparedStatement = con.prepareStatement(selectSql)) {
-            preparedStatement.setInt(1, topicId);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
-                    int id = resultSet.getInt("id");
-                    int userId = resultSet.getInt("user_id");
-                    String content = resultSet.getString("content");
-                    // Diğer alanları almak ve Comment nesnesini oluşturmak için buraya eklemeler yapabilirsiniz.
-                    Comment comment = new Comment(id, topicId, userId, content, null, null, 0, 0);
-                    comments.add(comment);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return comments;
-    }
-
-    // Diğer metotlar burada yer alır...
 
     @Override
-    public void addTopic(Comment comment) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void addComment(Comment comment) {
+        if(comment.getCheckContent()){
+
+        String sql = "INSERT INTO comments (topic_id, user_id, content) VALUES (?, ?, ?)";
+        Connection con = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+
+            con = DriverManager.getConnection(sqlConfig.url, sqlConfig.user, sqlConfig.password);
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, comment.getTopicId());
+            ps.setInt(2, comment.getUserId());
+            ps.setString(3, comment.getContent());
+            ps.executeUpdate();
+            System.out.println("Yorum eklendi.");
+            
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            // Bağlantıyı kapat
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        }
+        else {
+          System.out.println("CONTENT HATALI GELDI");
+        }
     }
 
     @Override
     public Comment getComment(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Connection con = null;
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection(sqlConfig.url, sqlConfig.user, sqlConfig.password);
+            String sql = "SELECT * FROM Comment WHERE id = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int topic_id = rs.getInt("topic_id");
+                int user_id = rs.getInt("user_id");
+                int upvotes = rs.getInt("upvotes");
+                int downvotes = rs.getInt("downvotes");
+                String content = (rs.getString("content") != null && !rs.getString("content").isEmpty()) ? rs.getString("content") : null;
+                java.sql.Timestamp createdAt = rs.getTimestamp("createdAt") != null ? rs.getTimestamp("createdAt") : new java.sql.Timestamp(new java.util.Date().getTime());
+                java.sql.Timestamp updatedAt = rs.getTimestamp("updatedAt") != null ? rs.getTimestamp("updatedAt") : new java.sql.Timestamp(new java.util.Date().getTime());
+                Comment returnedComment = new Comment();
+                returnedComment.setContent(content);
+                returnedComment.setTopicId(topic_id);
+                returnedComment.setUserId(user_id);
+                returnedComment.setupVotes(upvotes);
+                returnedComment.setdownVotes(downvotes);
+                returnedComment.setCreatedAt(createdAt);
+                returnedComment.setUpdatedAt(updatedAt);
+                return returnedComment;
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+
+        return null;
+    }
+    
+    @Override
+    public ArrayList<Models.Comment> getAllCommentsByTopicId(int topicId){
+        ArrayList<Models.Comment> comments = new ArrayList();
+        Connection con = null;
+         try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection(sqlConfig.url, sqlConfig.user, sqlConfig.password);
+            String sql = "SELECT * FROM comments WHERE topic_id = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, topicId);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Comment newComment = new Comment();
+                newComment.setId(rs.getInt("id"));
+                newComment.setTopicId(rs.getInt("topic_id"));
+                newComment.setUserId(rs.getInt("user_id"));
+                newComment.setContent(rs.getString("content"));
+                newComment.setCreatedAt(rs.getTimestamp("createdAt"));
+                newComment.setUpdatedAt(rs.getTimestamp("updatedAt"));
+                newComment.setupVotes(rs.getInt("upvotes"));
+                newComment.setdownVotes(rs.getInt("downvotes"));
+                comments.add(newComment);
+            }
+         }catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+         return comments;
     }
 
     @Override
-    public void updateComment(Comment comment) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean updateComment(Comment comment) {
+        if(comment.getCheckContent()){
+        Connection con = null;
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection(sqlConfig.url, sqlConfig.user, sqlConfig.password);
+            String sql = "UPDATE Users SET content = ? WHERE id = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, comment.getContent());
+
+            ps.setInt(2, comment.getId());
+
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        }
+        else{
+            System.out.println("CONTENT HATASI");
+            return false;
+        }
     }
 
     @Override
     public void deleteComment(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Connection con = null;
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection(sqlConfig.url, sqlConfig.user, sqlConfig.password);
+            String sql = "DELETE FROM Comments WHERE id = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
     }
 }
-

@@ -11,48 +11,64 @@ package Dao;
 
 
 import Models.Category;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryDaoImpl implements CategoryDao {
-    private Connection con;
-
-    public CategoryDaoImpl() {
-      
-    }
-
+public class CategoryDaoImpl implements CategoryDao{
+    
     @Override
     public void addCategory(Category category) {
-        String insertSql = "INSERT INTO categories (name, description) VALUES (?, ?)";
-        try (PreparedStatement preparedStatement = con.prepareStatement(insertSql)) {
-            preparedStatement.setString(1, category.getName());
-            preparedStatement.setString(2, category.getDescription());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        String sql = "INSERT INTO categories (name, description) VALUES (?, ?)";
+        Connection con = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            
+            con = DriverManager.getConnection(sqlConfig.url, sqlConfig.user, sqlConfig.password);
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, category.getName());
+            ps.setString(2, category.getDescription());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }finally{
+            // Bağlantıyı kapat
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e){ System.out.println(e);}
         }
     }
 
     @Override
-    public void updateCategory(Category category) {
-        String updateSql = "UPDATE categories SET name = ?, description = ? WHERE id = ?";
-        try (PreparedStatement preparedStatement = con.prepareStatement(updateSql)) {
-            preparedStatement.setString(1, category.getName());
-            preparedStatement.setString(2, category.getDescription());
-            preparedStatement.setInt(3, category.getId());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public void updateCategoryName(int id, String name) {
+        String sql = "UPDATE categories SET name = ? WHERE id = ?";
+        Connection con = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            
+            con = DriverManager.getConnection(sqlConfig.url, sqlConfig.user, sqlConfig.password);
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, name);
+            ps.setInt(3, id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }finally{
+            // Bağlantıyı kapat
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e){ System.out.println(e);}
         }
     }
-
+//
     @Override
     public void deleteCategory(int categoryId) {
         String deleteSql = "DELETE FROM categories WHERE id = ?";
+        Connection con = null;
         try (PreparedStatement preparedStatement = con.prepareStatement(deleteSql)) {
             preparedStatement.setInt(1, categoryId);
             preparedStatement.executeUpdate();
@@ -65,6 +81,7 @@ public class CategoryDaoImpl implements CategoryDao {
     public List<Category> getAllCategories() {
         List<Category> categories = new ArrayList<>();
         String selectSql = "SELECT * FROM categories";
+        Connection con = null;
         try (PreparedStatement preparedStatement = con.prepareStatement(selectSql);
              ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
@@ -81,9 +98,10 @@ public class CategoryDaoImpl implements CategoryDao {
     }
 
     @Override
-    public Category getCategoryById(int categoryId) {
+    public Category getCategory(int categoryId) {
         Category category = null;
         String selectSql = "SELECT * FROM categories WHERE id = ?";
+        Connection con = null;
         try (PreparedStatement preparedStatement = con.prepareStatement(selectSql)) {
             preparedStatement.setInt(1, categoryId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {

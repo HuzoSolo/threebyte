@@ -318,4 +318,22 @@
     }, 200);
   }
 
+<<<<<<< Updated upstream
 })();
+=======
+})();
+
+// Sağ tıklama olayını engelle
+document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+});
+
+
+// F12 tuşunu engelle
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'F12') {
+    e.preventDefault();
+    
+  }
+});
+>>>>>>> Stashed changes

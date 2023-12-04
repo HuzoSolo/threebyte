@@ -4,23 +4,22 @@
  */
 package Dao;
 
-import Models.Comment;
-import java.util.List;
-import javax.management.relation.Role;
+import Models.Role;
+
+
 
 /**
  *
  * @author sahin
  */
-public interface RoleDao{
-    void addRole(Role role);
+public interface RoleDao {
     
-    void updateRole(Role role);
+    public void addRole(Role role);
     
-    void deleteRole(int roleId);
+    public boolean updateRole(Role role);
     
-    List<Role> getAllRoles();
-    
-    Role getRoleById(int roleId);
+    public void deleteRole(int roleId);
+
+    public Role getRole(int roleId);
     
 }

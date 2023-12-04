@@ -9,14 +9,18 @@ package Dao;
  * @author artun
  */
 import Models.Topic;
+import java.util.ArrayList;
 
 public interface TopicDao {
 
     void addTopic(Topic topic);
 
     Topic getTopic(int id);
+    ArrayList<Models.Topic> getAllTopics();
 
-    void updateTopic(Topic topic);
+    boolean updateTopicTitle(Topic topic);
+    
+    boolean updateTopicContent(Topic topic);
 
     void deleteTopic(int id);
 }

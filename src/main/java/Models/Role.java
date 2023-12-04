@@ -9,15 +9,10 @@ package Models;
  * @author sahin
  */
 public class Role {
-     private int id;
+    private int id;
     private String roleName;
-
-    /**
-     *
-     */
-    public Role(int id1, String roleName1) {
-    }
-
+    private boolean checkRoleName;
+ 
     public int getId() {
         return id;
     }
@@ -29,8 +24,16 @@ public class Role {
     public String getRoleName() {
         return roleName;
     }
-
+    public boolean getCheckRoleName(){
+        return checkRoleName;
+    }
     public void setRoleName(String roleName) {
-        this.roleName = roleName;
+        if (roleName != null || !roleName.equals("")){
+            this.roleName = roleName;
+            checkRoleName = true;
+        }
+        else{
+            checkRoleName = false;
+        }
     }
 }

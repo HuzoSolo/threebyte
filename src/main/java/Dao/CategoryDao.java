@@ -19,10 +19,10 @@ public interface CategoryDao {
      * @param category
      */
     void addCategory(Category category);
-    void updateCategory(Category category);
+    void updateCategoryName(int id, String categoryName);
     void deleteCategory(int categoryId);
     List<Category> getAllCategories();
-    Category getCategoryById(int categoryId); 
+    Category getCategory(int categoryId); 
     
     
 }

@@ -9,15 +9,18 @@ package Dao;
  * @author sahin
  */
 import Models.Comment;
+import java.util.ArrayList;
 
 public interface CommentDao {
-    
-    void addTopic(Comment comment);
+
+    void addComment(Comment comment);
 
     Comment getComment(int id);
 
-    void updateComment(Comment comment);
+    boolean updateComment(Comment comment);
 
     void deleteComment(int id);
-    
+
+    ArrayList<Models.Comment> getAllCommentsByTopicId(int topic_id);
+
 }
